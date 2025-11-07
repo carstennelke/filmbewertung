@@ -6,7 +6,7 @@
     @elseif($film && $film['Response']==='True')
         <div class="overflow-hidden bg-white rounded-lg shadow-lg">
             <div class="md:flex">
-                <div class="md:w-1/3">
+                <div class="md:w-1/2">
                     @if($film['Poster'] !== 'N/A')
                         <img src="{{ $film['Poster'] }}" alt="{{ $film['Title'] }}" class="object-cover w-full h-full">
                     @else
@@ -15,20 +15,11 @@
                         </div>
                     @endif
                 </div>
-                <div class="p-6 md:w-2/3">
-                    <h1 class="mb-4 text-3xl font-bold">{{ $film['Title'] }} ({{ $film['Year'] }})</h1>
+                <div class="p-6 md:w-1/2">
+                    <h1 class="mb-4 text-3xl font-bold text-black">{{ $film['Title'] }} ({{ $film['Year'] }})</h1>
 
                     <div class="grid gap-4 mb-6">
-                        <div>
-                            <h2 class="font-semibold text-gray-600">Bewertung</h2>
-                            <div class="flex space-x-2">
-                                @foreach($film['Ratings'] ?? [] as $rating)
-                                    <span class="px-2 py-1 text-sm bg-gray-100 rounded">
-                                        {{ $rating['Source'] }}: {{ $rating['Value'] }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        </div>
+
 
                         <div>
                             <h2 class="font-semibold text-gray-600">Handlung</h2>
@@ -69,6 +60,15 @@
                     >
                         Zurück zur Suche
                     </a>
+                    <button
+                        wire:click="rateFilm()"
+                        class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                        Bewerten
+                    </button>
+                    <div class="text-black">
+                        {{ $localFilm }}
+                    </div>
                 </div>
             </div>
         </div>

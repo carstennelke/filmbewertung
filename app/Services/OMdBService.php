@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use Exception;
+use App\Models\Film;
+use App\Http\Resources\FilmResource;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use Exception;
 
 class OMdBService
 {
@@ -52,7 +54,7 @@ class OMdBService
         try {
             $cacheKey = "movie_" . $imdbId;
 
-            return Cache::remember($cacheKey, now()->addHours(24), function () use ($imdbId) {
+            return Cache::remember($cacheKey, 3600, function () use ($imdbId) {
                 $response = Http::get($this->baseUrl, [
                     'apikey' => $this->apiKey,
                     'i' => $imdbId,
@@ -60,6 +62,10 @@ class OMdBService
                 ]);
 
                 if ($response->successful()) {
+                    if($response['Response']==='True')
+                    {
+                        $this->storeFilmToDatabase($response->json());
+                    }
                     return $response->json();
                 }
 
@@ -68,6 +74,15 @@ class OMdBService
         } catch (Exception $e) {
             throw new Exception('Fehler beim Abruf der Film Daten: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Stores the given Film into local Database
+     * @param array $film
+     */
+    public function storeFilmToDatabase($film): void
+    {
+        $filmItem = Film::firstOrCreate(FilmResource::toModelArray($film));
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Film;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use App\Services\OMdBService;
@@ -12,6 +13,8 @@ class FilmDetail extends Component
     public string $id = '';
     public bool $isLoading = false;
     public $film = null;
+    public $localFilm = null;
+    public $rating = null;
 
     public function mount()
     {
@@ -33,6 +36,13 @@ class FilmDetail extends Component
         } finally {
             $this->isLoading = false;
         }
+    }
+
+    public function rateFilm()
+    {
+        $this->localFilm = Film::with('ratings')->imdb($this->film['imdbID'])->first();
+
+
     }
 
     public function render()

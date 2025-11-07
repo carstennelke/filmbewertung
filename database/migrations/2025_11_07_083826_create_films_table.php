@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string('imdbID', 10)->nullable();
-            $table->string('title', 100);
-            $table->integer('year')->unsigned();
-            $table->string('poster')->nullable();
+            $table->string('Title', 100);
+            $table->integer('Year')->unsigned();
+            $table->string('Poster')->nullable();
+            $table->text('Plot')->nullable();
+            $table->string('Genre')->nullable();
             $table->timestamps();
         });
     }
