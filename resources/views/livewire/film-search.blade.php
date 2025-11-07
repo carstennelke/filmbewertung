@@ -31,7 +31,7 @@
             @foreach($results['Search'] as $film)
                 <div class="overflow-hidden bg-white rounded-lg shadow-lg" wire:key="{{ $film['imdbID'] }}">
                     @if($film['Poster'] !== 'N/A')
-                        <img src="{{ $film['Poster'] }}" alt="{{ $film['Title'] }}" class="object-cover w-full h-64">
+                        <img src="{{ $film['Poster'] }}" alt="{{ $film['Title'] }}" class="object-contain w-full h-64">
                     @else
                         <div class="flex items-center justify-center w-full h-64 bg-gray-200">
                             <span class="text-gray-400">Kein Filmplakat verfügbar</span>
