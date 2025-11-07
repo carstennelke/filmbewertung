@@ -1,11 +1,13 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
-use App\Livewire\Settings\TwoFactor;
-use Illuminate\Support\Facades\Route;
+use App\Livewire\FilmDetail;
+use App\Livewire\FilmSearch;
 use Laravel\Fortify\Features;
+use App\Livewire\Settings\Profile;
+use App\Livewire\Settings\Password;
+use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Settings\Appearance;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('profile.edit');
     Route::get('settings/password', Password::class)->name('user-password.edit');
     Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
-
+    Route::get('/search', FilmSearch::class)->name('films.index');
+    Route::get('/detail', FilmDetail::class)->name('film.detail');
     Route::get('settings/two-factor', TwoFactor::class)
         ->middleware(
             when(
