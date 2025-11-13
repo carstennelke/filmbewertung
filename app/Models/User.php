@@ -3,13 +3,14 @@
 namespace App\Models;
 
 
+use App\Models\Film;
 use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -67,10 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get all of the ratings for the User
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function ratings(): HasMany
+    public function films(): BelongsToMany
     {
-        return $this->hasMany(Rating::class);
+        return $this->belongsToMany(Film::class)->withPivot('rating');
+
     }
 }

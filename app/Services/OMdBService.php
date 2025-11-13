@@ -82,7 +82,7 @@ class OMdBService
      */
     public function storeFilmToDatabase($film): void
     {
-        $filmItem = Film::firstOrCreate(FilmResource::toModelArray($film));
+        Film::firstOrCreate(FilmResource::toModelArray($film));
     }
 
 }

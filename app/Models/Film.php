@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Rating;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Film extends Model
 {
@@ -22,14 +23,20 @@ class Film extends Model
         return $query->where('imdbID',$q);
     }
 
-    /**
-     * Get all of the ratings for the Film
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function ratings(): HasMany
+    public function getAverageRatingAttribute()
     {
-        return $this->hasMany(Rating::class);
+        return round($this->users()->avg('rating'),1);
+    }
+
+    /**
+     * Get all of the ratings for the User
+     *
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot('rating');
+
     }
 
 }

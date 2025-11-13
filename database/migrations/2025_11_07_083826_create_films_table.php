@@ -21,6 +21,13 @@ return new class extends Migration
             $table->string('Genre')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('film_user', function (Blueprint $table) {
+            $table->id();
+            $table->integer('film_id')->references('id')->on('films');
+            $table->integer('user_id')->references('id')->on('users');
+            $table->integer('rating')->unsigned()->nullable();
+        });
     }
 
     /**

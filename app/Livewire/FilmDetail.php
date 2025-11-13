@@ -31,18 +31,12 @@ class FilmDetail extends Component
             {
                 throw new \Exception($this->film['Error'] ?? 'Fehler beim Abruf der Film Daten');
             }
+            $this->localFilm = Film::with('users')->imdb($this->film['imdbID'])->first();
         } catch (\Exception $e) {
             $this->addError('film', $e->getMessage());
         } finally {
             $this->isLoading = false;
         }
-    }
-
-    public function rateFilm()
-    {
-        $this->localFilm = Film::with('ratings')->imdb($this->film['imdbID'])->first();
-
-
     }
 
     public function render()
