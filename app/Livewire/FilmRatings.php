@@ -11,10 +11,6 @@ class FilmRatings extends Component
 {
     use WithPagination;
 
-    protected $listeners = [
-        'filmRatingUpdated' => '$refresh'
-    ];
-
     public function render()
     {
         return view('livewire.film-ratings', [

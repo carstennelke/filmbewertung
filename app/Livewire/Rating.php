@@ -45,7 +45,7 @@ class Rating extends Component
 
         }
         $this->userRating = $starsCount;
-        $this->dispatch('filmRatingUpdated');
+        $this->film->refresh();
     }
 
     /**

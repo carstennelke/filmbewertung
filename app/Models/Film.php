@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Rating;
+use App\Models\WatchlistItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -25,6 +27,10 @@ class Film extends Model
         'users'
     ];
 
+    protected $appends = [
+        'isOnUsersWatchlist'
+    ];
+
     public function scopeImdb( $query, $q)
     {
         return $query->where('imdbID',$q);
@@ -38,6 +44,10 @@ class Film extends Model
     {
         return round($this->users->avg('pivot.rating'),1);
     }
+    public function getIsOnUsersWatchlistAttribute()
+    {
+        return auth()->user() ? $this->watchlistitems()->where('user_id', auth()->user()->id)->count() > 0 : false;
+    }
 
     /**
      * Get all of the ratings for the User
@@ -47,7 +57,16 @@ class Film extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withPivot('rating');
-
     }
+    /**
+     * Get all of the watchlistitems for the film
+     *
+     * @return HasMany
+     */
+    public function watchlistitems(): HasMany
+    {
+        return $this->hasMany(WatchlistItem::class);
+    }
+
 
 }

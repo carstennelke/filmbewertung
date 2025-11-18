@@ -18,13 +18,17 @@ class WatchlistItem extends Model
         'film'
     ];
 
-    public function scopeHasUser($query, $userId)
+    public function scopeIsUser($query, $userId)
     {
         return $query->where('user_id',$userId);
     }
-    public function scopeHasFilm($query, $filmId)
+    public function scopeIsFilm($query, $filmId)
     {
         return $query->where('film_id',$filmId);
+    }
+    public function getIsOnUsersWatchlistAttribute()
+    {
+        return $this->user_id === auth()->user()->id;
     }
 
     /**
