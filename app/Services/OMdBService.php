@@ -77,7 +77,7 @@ class OMdBService
     }
 
     /**
-     * Stores the given Film into local Database
+     * Stores the given Film into local Database for Rating and Watchlist functionality
      * @param array $film
      */
     public function storeFilmToDatabase($film): void
