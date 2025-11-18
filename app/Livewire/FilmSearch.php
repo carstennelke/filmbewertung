@@ -15,7 +15,6 @@ class FilmSearch extends Component
     public string $search = '';
     public ?array $results = null;
     public int $page = 1;
-    public bool $isLoading = false;
 
     public function updatedSearch()
     {
@@ -32,13 +31,10 @@ class FilmSearch extends Component
         }
 
         try {
-            $this->isLoading = true;
             $omdb = new OMdBService();
             $this->results = $omdb->searchFilmsByTitle($this->search, $this->page);
         } catch (\Exception $e) {
             $this->addError('search', $e->getMessage());
-        } finally {
-            $this->isLoading = false;
         }
     }
 

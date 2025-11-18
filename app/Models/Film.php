@@ -23,10 +23,6 @@ class Film extends Model
         'Genre'
     ];
 
-    protected $with = [
-        'users'
-    ];
-
     protected $appends = [
         'isOnUsersWatchlist'
     ];
@@ -42,8 +38,9 @@ class Film extends Model
 
     public function getAverageRatingAttribute()
     {
-        return round($this->users->avg('pivot.rating'),1);
+        return round($this->users()->avg('rating'),1);
     }
+
     public function getIsOnUsersWatchlistAttribute()
     {
         return auth()->user() ? $this->watchlistitems()->where('user_id', auth()->user()->id)->count() > 0 : false;
