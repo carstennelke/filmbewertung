@@ -13,8 +13,9 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Navigation')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item  :href="route('films.index')" :current="request()->routeIs('films.index')" wire:navigate>{{ __('Filme') }}</flux:navlist.item>
+                    <flux:navlist.item  :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Bewertungen</flux:navlist.item>
+                    <flux:navlist.item  :href="route('films.index')" :current="request()->routeIs('films.index')" wire:navigate>Filmsuche</flux:navlist.item>
+                    <flux:navlist.item  :href="route('watchlist.index')" :current="request()->routeIs('watchlist.index')" wire:navigate>Watchlist</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

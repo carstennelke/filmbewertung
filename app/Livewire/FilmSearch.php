@@ -22,7 +22,10 @@ class FilmSearch extends Component
         $this->resetPage();
     }
 
-    public function searchFilms()
+    /**
+     * Search for Films in OMdB
+     */
+    public function searchFilms(): void
     {
         if (strlen($this->search) < 3) {
             return;
@@ -39,7 +42,10 @@ class FilmSearch extends Component
         }
     }
 
-    public function loadMore()
+    /**
+     * Get more Film Entries based on search
+     */
+    public function loadMore(): void
     {
         $this->page++;
         $this->searchFilms();

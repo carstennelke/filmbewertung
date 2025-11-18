@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Rating;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Film extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'imdbID',
         'Poster',
@@ -18,14 +21,22 @@ class Film extends Model
         'Genre'
     ];
 
+    protected $with = [
+        'users'
+    ];
+
     public function scopeImdb( $query, $q)
     {
         return $query->where('imdbID',$q);
     }
+    public function scopeIsRated( $query)
+    {
+        return $query->whereHas('users');
+    }
 
     public function getAverageRatingAttribute()
     {
-        return round($this->users()->avg('rating'),1);
+        return round($this->users->avg('pivot.rating'),1);
     }
 
     /**

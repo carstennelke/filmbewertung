@@ -6,7 +6,7 @@
                 wire:model.live.debounce.300ms="search"
                 wire:keydown.enter="searchFilms"
                 placeholder="Nach Filmen suchen..."
-                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-4 py-2 bg-white text-black border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
         </div>
         <button
@@ -28,13 +28,17 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach($results['Search'] as $film)
                 <div class="overflow-hidden bg-white rounded-lg shadow-lg" wire:key="{{ $film['imdbID'] }}">
-                    @if($film['Poster'] !== 'N/A')
-                        <img src="{{ $film['Poster'] }}" alt="{{ $film['Title'] }}" class="object-contain w-full h-64">
-                    @else
-                        <div class="flex items-center justify-center w-full h-64 bg-gray-200">
-                            <span class="text-gray-400">Kein Filmplakat verfügbar</span>
-                        </div>
-                    @endif
+                    <a
+                        href="{{ route('film.detail', ['id'=>$film['imdbID']] ) }}"
+                    >
+                        @if($film['Poster'] !== 'N/A')
+                            <img src="{{ $film['Poster'] }}" alt="{{ $film['Title'] }}" class="object-contain w-full h-64">
+                        @else
+                            <div class="flex items-center justify-center w-full h-64 bg-gray-200">
+                                <span class="text-gray-400">Kein Filmplakat verfügbar</span>
+                            </div>
+                        @endif
+                    </a>
                     <div class="p-4">
                         <h3 class="mb-2 text-xl text-gray-600 font-semibold">{{ $film['Title'] }}</h3>
                         <p class="text-gray-600">Jahr: {{ $film['Year'] }}</p>

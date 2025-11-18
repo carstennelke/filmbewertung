@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class Rating extends Component
 {
     public int $userRating;
-    public int $averageRating;
     public Film $film;
     public bool $isGuest;
 
@@ -17,7 +16,6 @@ class Rating extends Component
     {
         $this->isGuest = !Auth::check();
         $this->film = $film;
-        $this->calcAverageRating();
         $this->userRating = $this->getUserRating();
     }
 
@@ -47,7 +45,7 @@ class Rating extends Component
 
         }
         $this->userRating = $starsCount;
-        $this->calcAverageRating();
+        $this->dispatch('filmRatingUpdated');
     }
 
     /**
@@ -62,11 +60,4 @@ class Rating extends Component
         return $userRating ? $userRating->pivot->rating : 0;
     }
 
-    /**
-     * Calculate the Average Rating
-     */
-    private function calcAverageRating(): void
-    {
-        $this->averageRating = $this->film->averageRating;
-    }
 }

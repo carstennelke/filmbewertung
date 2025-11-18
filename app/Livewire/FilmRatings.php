@@ -11,10 +11,14 @@ class FilmRatings extends Component
 {
     use WithPagination;
 
+    protected $listeners = [
+        'filmRatingUpdated' => '$refresh'
+    ];
+
     public function render()
     {
         return view('livewire.film-ratings', [
-            'films' => Film::paginate(3),
+            'films' => Film::isRated()->paginate(5),
         ]);
     }
 }

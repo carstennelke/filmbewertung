@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Watchlist;
 use App\Livewire\FilmDetail;
 use App\Livewire\FilmSearch;
 use Laravel\Fortify\Features;
@@ -16,6 +17,7 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -24,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
     Route::get('/search', FilmSearch::class)->name('films.index');
     Route::get('/detail', FilmDetail::class)->name('film.detail');
+    Route::get('/watchlist', Watchlist::class)->name('watchlist.index');
     Route::get('settings/two-factor', TwoFactor::class)
         ->middleware(
             when(

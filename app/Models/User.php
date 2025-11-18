@@ -5,9 +5,11 @@ namespace App\Models;
 
 use App\Models\Film;
 use Illuminate\Support\Str;
+use App\Models\WatchlistItem;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -73,6 +75,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function films(): BelongsToMany
     {
         return $this->belongsToMany(Film::class)->withPivot('rating');
+
+    }
+    /**
+     * Get the wtachlistitems for the User
+     *
+     * @return HasMany
+     */
+    public function watchlist(): HasMany
+    {
+        return $this->hasMany(WatchlistItem::class);
 
     }
 }

@@ -21,7 +21,10 @@ class FilmDetail extends Component
         $this->getFilm();
     }
 
-    public function getFilm()
+    /**
+     * Get Film Information from OMdB Service and store it locally if not existing
+     */
+    public function getFilm(): void
     {
         try {
             $this->isLoading = true;
